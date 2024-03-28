@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
-const port = 3000;
 
-app.get("/", (req, res) => {
-   res.send("Hello World!");
-});
+require("dotenv").config();
+const port = process.env.APP_PORT || 3030;
+
+const router = require("./route");
+app.use("/", router);
 
 app.listen(port, () => {
-   console.log(`Example app listening on port ${port}`);
+   console.log(`Running ons port ${port}`);
 });
