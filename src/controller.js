@@ -1,9 +1,11 @@
 const db = require("../config/db");
 
+// function enpoint
 const endpoint = (req, res, next) => {
    res.send("The API is Running");
 };
 
+// function select
 const jobSelect = async (req, res, next) => {
    try {
       const { id } = req.body;
@@ -22,6 +24,7 @@ const jobSelect = async (req, res, next) => {
    }
 };
 
+// function delete
 const jobDelete = async (req, res, next) => {
    try {
       const { id } = req.body;
@@ -38,6 +41,7 @@ const jobDelete = async (req, res, next) => {
    }
 };
 
+// function update
 const jobUpdate = async (req, res, next) => {
    try {
       const { id, name, email } = req.body;
@@ -62,6 +66,7 @@ const jobUpdate = async (req, res, next) => {
    }
 };
 
+// function insert
 const jobInsert = async (req, res, next) => {
    try {
       const { name, email } = req.body;
@@ -82,6 +87,7 @@ const jobInsert = async (req, res, next) => {
    }
 };
 
+// function user
 const user = async (req, res, next) => {
    try {
       const { id } = req.body;
