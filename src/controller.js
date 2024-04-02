@@ -69,17 +69,33 @@ const jobUpdate = async (req, res, next) => {
 // function insert
 const jobInsert = async (req, res, next) => {
    try {
-      const { name, email } = req.body;
-      if (!name || !email) {
+      const { companyName, position, notes, idStatus, idContract } = req.body;
+      if (!companyName || !position || !notes || !idStatus || !idContract) {
          return res
             .status(400)
             .json({ message: "Missing required parameters" });
       }
 
+      // Insert company into ref_company table
+      const companyInsertResult = await db
+         .promise()
+         .query("INSERT INTO ref_company (company_name) VALUES (?)", [
+            companyName,
+         ]);
+
+      const companyId = companyInsertResult[0].insertId;
+
+      // Insert job application into job_application table
       await db
          .promise()
-         .query("INSERT INTO user (name, email) VALUES (?, ?)", [name, email]);
-      res.status(201).json({ message: "User inserted successfully" });
+         .query(
+            "INSERT INTO job_application (id_company, id_status, position, id_contract, notes) VALUES (?, ?, ?, ?, ?)",
+            [companyId, idStatus, position, idContract, notes]
+         );
+
+      res.status(201).json({
+         message: "Job application inserted successfully",
+      });
    } catch (err) {
       res.status(500).json({
          message: err,
